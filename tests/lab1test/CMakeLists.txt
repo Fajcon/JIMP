@@ -6,11 +6,11 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 
 set(FACTORIAL_SRC FactorialTest.cpp)
-set(REVERSE_STRING_SRC ReverseStringTest.cpp)
+set(REVERSE_STRING_SRC ReverseStringTest.cpp ../../lab1/reversestring/main.cpp)
 set(PALINDROME_SRC PalindromeTest.cpp)
 set(MULTIPLICATION_TABLE_SRC MultiplicationTableTest.cpp)
 set(DOUBLE_BASE_PALINDROME_SRC DoubleBasePalindromeTest.cpp)
-set(SOURCE_FILES ${FACTORIAL_SRC} ${REVERSE_STRING_SRC} ${PALINDROME_SRC} ${MULTIPLICATION_TABLE_SRC} ${DOUBLE_BASE_PALINDROME_SRC})
+set(SOURCE_FILES ${FACTORIAL_SRC} ${REVERSE_STRING_SRC} ${PALINDROME_SRC} ${MULTIPLICATION_TABLE_SRC} ${DOUBLE_BASE_PALINDROME_SRC} ../../lab1/reversestring/main.cpp ../../lab1/reversestring/ReverseString.cpp ../../lab1/reversestring/ReverseString.h)
 
 set(GTEST_LIBS gtest gtest_main gmock gmock_main)
 
