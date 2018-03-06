@@ -1,11 +1,13 @@
-project(factorial)
 
-set(HEDEAR_FILES Factorial.h)
-set(SOURCE_FILES Factorial.cpp)
+project(reversestring)
 
-add_library(libfactorial STATIC ${SOURCE_FILES})
-target_include_directories(libfactorial PUBLIC .)
+set(HEDEAR_FILES ReverseString.h)
+set(SOURCE_FILES ReverseString.cpp)
 
-add_executable(factorial ${SOURCE_FILES} main.cpp)
+add_library(libreversestring STATIC ${SOURCE_FILES})
+target_include_directories(libreversestring PUBLIC .)
 
-target_link_libraries(factorial libfactorial)
+add_executable(reversestring ${SOURCE_FILES} main.cpp)
+
+target_link_libraries(reversestring libreversestring)
+
