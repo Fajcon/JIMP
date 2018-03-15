@@ -91,14 +91,14 @@ std::string PolybiusDecrypt(std::string crypted){
     const std::string square[5][5] = {
             {"a", "b", "c", "d", "e"},
             {"f", "g", "h", "i", "k"},
-            {"l", "M", "N", "O", "P"},
+            {"l", "m", "n", "o", "p"},
             {"q", "r", "s", "t", "u"},
             {"v", "w", "x", "y", "z"},
     };
 
     for (int i = 0; i < crypted.length() ; i=i+2) {
 
-        message = message + square[i][i+1];
+        message = message + square[crypted[i+1]][crypted[i]];
     }
 
     return message;
