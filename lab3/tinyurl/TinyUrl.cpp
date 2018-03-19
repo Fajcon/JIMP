@@ -7,14 +7,16 @@
 #include <string>
 #include <array>
 #include <memory>
+#include <string>
 
 namespace tinyurl{
 
-    struct TinyUrlCodec;
+    struct TinyUrlCodec{
+        std::array<char, 6> state;
+        std::string url;
+    };
 
-    std::unique_ptr<TinyUrlCodec> Init() {
-
-    }
+    std::unique_ptr<TinyUrlCodec> Init();
 
 
     void NextHash(std::array<char, 6> *state) {
@@ -41,7 +43,9 @@ namespace tinyurl{
 
 
 
-    std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec) {
+    std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> codec) {
+        codec = std::make_unique<TinyUrlCodec>();
+        codec->state;
 
     }
 
