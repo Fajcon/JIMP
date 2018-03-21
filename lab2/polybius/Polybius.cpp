@@ -82,6 +82,7 @@ bool getBoolean(const std::string &message, int i) {
                 message[i] =='ś' or message[i] =='Ą' or message[i] =='Ę' or message[i] =='Ć' or
                 message[i] =='Ź' or message[i] =='Ż' or message[i] =='Ł' or message[i] =='Ó' or
                 message[i] =='Ń' or message[i] =='Ś';
+    //todo substrings ||
 }
 
 std::string PolybiusDecrypt(std::string crypted){
