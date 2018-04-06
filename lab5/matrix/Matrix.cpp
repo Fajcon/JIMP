@@ -3,7 +3,6 @@
 //
 
 #include "Matrix.h"
-#include <vector>
 
 namespace algebra {
 
@@ -23,11 +22,34 @@ namespace algebra {
         }
     }
 
-    Matrix::Matrix(const char *) {
+    Matrix::Matrix(const char *){
 
     }
 
-    Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>>) {
+    Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> new_matrix) {
+        n_y_ = new_matrix.size();
+        n_x_ = (*new_matrix.begin()).size();
+
+        if (n_y_ < 1 || n_x_ < 1) {
+            n_y_ = 0;
+            n_x_ = 0;
+            return;
+        }
+        for (int i = 0; i < n_y_; ++i) {
+            matrix_.emplace_back(std::vector<std::complex<double>>());
+            for (int j = 0; j < n_x_; ++j) {
+                matrix_[i].emplace_back(std::complex<double>());
+            }
+        }
+
+        std::initializer_list<std::vector<std::complex<double>>>::iterator it;
+        int i = 0;
+        for (it = new_matrix.begin(); it != new_matrix.end(); it++) {
+            for (int j = 0; j < n_y_; j++) {
+                matrix_[i][j] = (*it)[j];
+            }
+            i++;
+        }
 
     }
 
@@ -38,26 +60,55 @@ namespace algebra {
 
     Matrix Matrix::Add(const Matrix m2) const {
 
-        Matrix result(this->n_x_, m2.n_y_);
-
         if (this->n_y_== m2.n_y_ && this->n_x_ == m2.n_x_) {
-            for (int i = 0; i < m2.n_y_; ++i) {
-                for (int j = 0; j < m2.n_x_; ++j) {
+            Matrix result = Matrix(this->n_x_, this->n_y_);
+            for (int i = 0; i < n_y_; ++i) {
+                for (int j = 0; j < n_x_; ++j) {
                     result.matrix_[i][j] = this->matrix_[i][j] + m2.matrix_[i][j];
                 }
             }
-
-            return Matrix();
+            return result;
         }
     }
 
-    Matrix Matrix::Sub(const Matrix) {
-        return Matrix();
+    Matrix Matrix::Sub(const Matrix m2) {
+        if (this->n_y_== m2.n_y_ && this->n_x_ == m2.n_x_) {
+            Matrix result = Matrix(this->n_x_, this->n_y_);
+            for (int i = 0; i < n_y_; ++i) {
+                for (int j = 0; j < n_x_; ++j) {
+                    result.matrix_[i][j] = this->matrix_[i][j] - m2.matrix_[i][j];
+                }
+            }
+            return result;
+        }
     }
 
-    Matrix Matrix::Mul(const Matrix) {
-        return Matrix();
+    Matrix Matrix::Mul(const Matrix m2) {
+
+       if (this->n_x_ == m2.n_y_) {
+            Matrix result = Matrix(m2.n_x_, this->n_y_);
+            for (int i = 0; i < n_y_; i++)
+                for (int j = 0; j < m2.n_x_; j++) {
+                    for (int k = 0; k < n_x_; k++) {
+                        result.matrix_[i][j] += matrix_[i][k] * m2.matrix_[k][j];
+                    }
+                }
+            return result;
+       }
     }
+
+    Matrix Matrix::Mul(std::complex<double> n) {
+
+        Matrix result = Matrix(this->n_x_, this->n_y_);
+
+        for (int i = 0; i < n_y_; i++) {
+            for (int j = 0; j < n_x_; j++) {
+                result.matrix_[i][j] = this->matrix_[i][j] * n;
+            }
+        }
+        return result;
+    }
+
 
     Matrix Matrix::Div(const Matrix) {
         return Matrix();
@@ -72,16 +123,25 @@ namespace algebra {
     }
 
     std::string Matrix::Print() const{
-        std::string result;
-        for (int i = 0; i < this->n_y_; ++i) {
-            for (int j = 0; j < this->n_x_; ++j) {
-                std::string s;
-                this->matrix_[i][j];
-                result += ;
-            }
+        std::ostringstream result;
+        result<<"[";
+        for (int i = 0; i < n_y_; ++i) {
+            for (int j = 0; j < n_x_; ++j) {
+                result << this->matrix_[i][j].real()<<"i"<< this->matrix_[i][j].imag();
+                if(j == n_x_-1 && i != n_y_-1) {
+                    result << "; ";
 
+                }
+                else if((j == n_x_-1) && (i =  2)){
+                    result << "";
+                }
+                else{
+                    result << ", ";
+                }
+            }
         }
-        return result;
+        result << "]";
+        return result.str();
     }
 
 }

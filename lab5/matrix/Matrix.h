@@ -16,7 +16,7 @@ namespace algebra {
     public:
         Matrix();
 
-        Matrix(std::initializer_list<std::vector<std::complex<double>>>);
+        Matrix(std::initializer_list<std::vector<std::complex<double>>> new_matrix);
 
         Matrix(int x, int y);
 
@@ -30,6 +30,8 @@ namespace algebra {
 
         Matrix Mul(const Matrix);
 
+        Matrix Mul(std::complex<double>);
+
         Matrix Div(const Matrix);
 
         Matrix Pow(int n);
@@ -37,6 +39,8 @@ namespace algebra {
         std::pair<size_t, size_t> Size();
 
         std::string Print() const;
+
+
 
 
     private:
