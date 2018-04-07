@@ -35,7 +35,7 @@ namespace algebra {
             return;
         }
         for (int i = 0; i < n_y_; ++i) {
-            matrix_.emplace_back(std::vector<std::complex<double>>());
+            matrix_.emplace_back();
             for (int j = 0; j < n_x_; ++j) {
                 matrix_[i].emplace_back(std::complex<double>());
             }
