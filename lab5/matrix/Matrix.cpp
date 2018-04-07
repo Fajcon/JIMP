@@ -17,7 +17,7 @@ namespace algebra {
         for (int i = 0; i < n_y_; ++i) {
             matrix_.emplace_back(std::vector<std::complex<double>>());
             for (int j = 0; j < n_x_; ++j) {
-                matrix_[i].push_back(std::complex<double>());
+                matrix_[i].emplace_back(std::complex<double>());
             }
         }
     }
@@ -29,7 +29,6 @@ namespace algebra {
     Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> new_matrix) {
         n_y_ = new_matrix.size();
         n_x_ = (*new_matrix.begin()).size();
-
         if (n_y_ < 1 || n_x_ < 1) {
             n_y_ = 0;
             n_x_ = 0;
@@ -41,7 +40,6 @@ namespace algebra {
                 matrix_[i].emplace_back(std::complex<double>());
             }
         }
-
         std::initializer_list<std::vector<std::complex<double>>>::iterator it;
         int i = 0;
         for (it = new_matrix.begin(); it != new_matrix.end(); it++) {
@@ -50,11 +48,9 @@ namespace algebra {
             }
             i++;
         }
-
     }
 
-
-    Matrix::~Matrix() {
+   Matrix::~Matrix() {
 
     }
 
@@ -83,18 +79,19 @@ namespace algebra {
         }
     }
 
-    Matrix Matrix::Mul(const Matrix m2) {
+    Matrix Matrix::Mul(const Matrix &m2) {
 
        if (this->n_x_ == m2.n_y_) {
             Matrix result = Matrix(m2.n_x_, this->n_y_);
             for (int i = 0; i < n_y_; i++)
                 for (int j = 0; j < m2.n_x_; j++) {
+                    result.matrix_[i][j] = std::complex<double>(0, 0);
                     for (int k = 0; k < n_x_; k++) {
                         result.matrix_[i][j] += matrix_[i][k] * m2.matrix_[k][j];
                     }
                 }
             return result;
-       }
+       } else return Matrix();
     }
 
     Matrix Matrix::Mul(std::complex<double> n) {
@@ -132,15 +129,14 @@ namespace algebra {
                     result << "; ";
 
                 }
-                else if((j == n_x_-1) && (i =  2)){
-                    result << "";
+                else if((j == n_x_-1) && (i = n_y_ -1)){
+                    result << "]";
                 }
                 else{
                     result << ", ";
                 }
             }
         }
-        result << "]";
         return result.str();
     }
 

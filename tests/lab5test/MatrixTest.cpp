@@ -81,6 +81,8 @@ TEST_F(MatrixTests, IsAbleToSubtractMatrices) {
 }
 
 TEST_F(MatrixTests, IsAbleToMultiplyMatrices) {
+   //Matrix m1{{1.0i, 0.}, {0., 1.0i}};
+    //Matrix m2{{1.0i, 0.}, {0., 1.0i}};
   Matrix m1{{1.0i, 0., 0.}, {0., 1.0i, 0.}};
   Matrix m2{{7. + 1.0i, 0.}, {0., 1.0i}, {15. + 2.0i, 0. + 3.0i}};
   EXPECT_EQ("[-1i7, 0i0; 0i0, -1i0]", m1.Mul(m2).Print());

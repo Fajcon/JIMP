@@ -28,7 +28,7 @@ namespace algebra {
 
         Matrix Sub(const Matrix);
 
-        Matrix Mul(const Matrix);
+        Matrix Mul(const Matrix &m2);
 
         Matrix Mul(std::complex<double>);
 
