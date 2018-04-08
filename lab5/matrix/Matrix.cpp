@@ -7,6 +7,8 @@
 namespace algebra {
 
     Matrix::Matrix() {
+        n_x_ = 0;
+        n_y_ = 0;
 
     }
 
@@ -28,6 +30,7 @@ namespace algebra {
 
     Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> new_matrix) {
         n_y_ = new_matrix.size();
+
         n_x_ = (*new_matrix.begin()).size();
         if (n_y_ < 1 || n_x_ < 1) {
             n_y_ = 0;
@@ -37,13 +40,14 @@ namespace algebra {
         for (int i = 0; i < n_y_; ++i) {
             matrix_.emplace_back();
             for (int j = 0; j < n_x_; ++j) {
-                matrix_[i].emplace_back(std::complex<double>());
+                matrix_[i].push_back(std::complex<double>());
             }
         }
+
         std::initializer_list<std::vector<std::complex<double>>>::iterator it;
         int i = 0;
         for (it = new_matrix.begin(); it != new_matrix.end(); it++) {
-            for (int j = 0; j < n_y_; j++) {
+            for (int j = 0; j < n_x_; j++) {
                 matrix_[i][j] = (*it)[j];
             }
             i++;
@@ -55,7 +59,6 @@ namespace algebra {
     }
 
     Matrix Matrix::Add(const Matrix m2) const {
-
         if (this->n_y_== m2.n_y_ && this->n_x_ == m2.n_x_) {
             Matrix result = Matrix(this->n_x_, this->n_y_);
             for (int i = 0; i < n_y_; ++i) {
@@ -95,9 +98,7 @@ namespace algebra {
     }
 
     Matrix Matrix::Mul(std::complex<double> n) {
-
         Matrix result = Matrix(this->n_x_, this->n_y_);
-
         for (int i = 0; i < n_y_; i++) {
             for (int j = 0; j < n_x_; j++) {
                 result.matrix_[i][j] = this->matrix_[i][j] * n;
@@ -112,7 +113,27 @@ namespace algebra {
     }
 
     Matrix Matrix::Pow(int n) {
-        return Matrix();
+
+        Matrix result = *this;
+        if (n == 0) {
+            for (int i = 0; i < n_y_; i++) {
+                for (int j = 0; j < n_x_; j++) {
+                    if (i != j) {
+                        result.matrix_[i][j] = 0.+0i;
+                    } else {
+                        result.matrix_[i][j] = 1.+0i;
+                    }
+                }
+            }
+            return result;
+        }
+        else if (n == 1) {
+            return *this;
+        }
+        else {
+            return result.Mul(Pow(n - 1));
+        }
+
     }
 
     std::pair<size_t, size_t> Matrix::Size() {
@@ -120,6 +141,11 @@ namespace algebra {
     }
 
     std::string Matrix::Print() const{
+
+        if (this ->n_x_== 0 || this->n_y_==0){
+            return "[]";
+        }
+
         std::ostringstream result;
         result<<"[";
         for (int i = 0; i < n_y_; ++i) {
