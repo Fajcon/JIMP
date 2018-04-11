@@ -38,10 +38,15 @@ namespace geometry {
 
         void SetY(double y);
 
+
     private:
         //w przeciwienstwie do pythona C++ wymaga jawnej deklaracji składowych pól klasy:
         double x_, y_;
     };
+
+    std::istream& operator>>(std::istream &is, Point& point);
+    std::ostream& operator<<(std::ostream &output, Point& point);
+
 
 #endif  // PROJECTNAME_PATH_POINT_H_
 
