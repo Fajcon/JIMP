@@ -10,6 +10,7 @@
 #include <utility>
 #include <map>
 #include <set>
+#include <list>
 #include <initializer_list>
 #include <sstream>
 
@@ -30,11 +31,15 @@ namespace datastructures {
 
         bool operator==(const Counts &x);
 
+        bool operator!=(const Counts &x);
+
         bool operator>(const Counts &x);
 
         bool operator<(const Counts &x);
 
         bool operator==(const int &x) const;
+
+        bool operator!=(const int &x) const;
 
         bool operator>(const int &x);
 
@@ -57,7 +62,9 @@ namespace datastructures {
 
         explicit Word(const std::string &word);
 
-        bool operator==(const Word &x)const;
+        std::string getWord() const;
+
+        bool operator==(const Word &x) const;
         bool operator>(const Word &x)const;
         bool operator<(const Word &x)const;
 
@@ -86,6 +93,7 @@ namespace datastructures {
     private:
 
         std::map<Word, Counts> map_;
+        Word word_;
 
     };
 
