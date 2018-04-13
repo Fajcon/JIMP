@@ -26,13 +26,28 @@ namespace datastructures {
 
         Counts &operator++();
 
-        int getCount();
+        int getCount() const;
+
+        bool operator==(const Counts &x);
+
+        bool operator>(const Counts &x);
+
+        bool operator<(const Counts &x);
+
+        bool operator==(const int &x) const;
+
+        bool operator>(const int &x);
+
+        bool operator<(const int &x);
+
+
 
     private:
 
         int count_;
 
     };
+
 
     class Word{
 
@@ -42,24 +57,31 @@ namespace datastructures {
 
         explicit Word(const std::string &word);
 
+        bool operator==(const Word &x)const;
+        bool operator>(const Word &x)const;
+        bool operator<(const Word &x)const;
+
+
     private:
         std::string word_;
 
     };
+
 
     class WordCounter {
     public:
 
         WordCounter();
 
-        WordCounter(const std::initializer_list<Word>);
+        WordCounter(std::initializer_list<Word> list);
 
-        unsigned long DistinctWords();
+        int DistinctWords();
 
         int TotalWords();
 
         int operator[](const std::string &);
 
+        std::set<Word> Words();
 
     private:
 

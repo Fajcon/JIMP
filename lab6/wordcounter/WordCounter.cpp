@@ -5,7 +5,7 @@
 #include "WordCounter.h"
 namespace datastructures {
 
-    //Konstruktory ------------------//
+    //Word------------------//
 
     Word::Word(){
 
@@ -17,6 +17,20 @@ namespace datastructures {
 
     }
 
+    bool Word::operator==(const Word &x) const {
+        return false;
+    }
+
+    bool Word::operator>(const Word &x) const {
+        return false;
+    }
+
+    bool Word::operator<(const Word &x) const {
+        return false;
+    }
+
+
+    //Counts ---------------- //
     Counts::Counts() {
 
         count_ = 0;
@@ -35,18 +49,44 @@ namespace datastructures {
 
     }
 
-    int Counts::getCount() {
+    int Counts::getCount() const{
         return count_;
     }
 
+    bool Counts::operator==(const Counts &x){
+        return this->getCount()==x.getCount();
+    }
+
+    bool Counts::operator>(const Counts &x){
+        return this->getCount()>x.getCount();
+    }
+
+    bool Counts::operator<(const Counts &x) {
+        return this->getCount()<x.getCount();
+    }
+
+    bool Counts::operator==(const int &x) const{
+        return this->getCount()==x;
+    }
+
+    bool Counts::operator>(const int &x){
+        return this->getCount()>x;
+    }
+
+    bool Counts::operator<(const int &x){
+        return this->getCount()<x;
+    }
+
+
+    //Word counter ---------------------------//
     WordCounter::WordCounter(){
 
     }
 
 
-    WordCounter::WordCounter(const std::initializer_list<Word> list) {
+    WordCounter::WordCounter(std::initializer_list<Word> list) {
         for(auto i : list){
-            if(map_.count(i)>0) {
+            if(map_.count(i)!=0) {
                 ++(map_[i]);
             }
             else{
@@ -55,14 +95,34 @@ namespace datastructures {
         }
     }
 
-    //Metody ----------------------------//
-
-    unsigned long  WordCounter::DistinctWords() {
-        return 0;
+    int  WordCounter::DistinctWords() {
+        int result=0;
+        for(auto i : map_) {
+            if (i.second.getCount()>0){
+                ++result;
+            }
+        }
+        return result;
     }
 
     int WordCounter::TotalWords() {
-        return 0;
+        int result=0;
+        for(auto i : map_){
+            result+=i.second.getCount();
+        }
+        return result;
+    }
+
+    std::set<Word>WordCounter::Words(){
+        int n=0;
+        std::set<Word> result;
+        for(auto i : map_){
+            n=i.second.getCount();
+            for (int j = n; j > 0; --j) {
+                result.insert(i.first);
+            }
+        }
+        return result;
     }
 
     int WordCounter::operator[](const std::string &word) {
