@@ -7,12 +7,11 @@ namespace datastructures {
 
     //Word------------------//
 
-    Word::Word(){
+    //Word::Word(){
+    //
+    //}
 
-    }
-
-    Word::Word(const std::string &word) {
-
+    Word::Word(std::string word) {
         word_ = word;
 
     }
@@ -26,11 +25,11 @@ namespace datastructures {
     }
 
     bool Word::operator>(const Word &x) const {
-        return false;
+        return word_>x.getWord();
     }
 
     bool Word::operator<(const Word &x) const {
-        return false;
+        return word_<x.getWord();
     }
 
     std::string Word::getWord() const{
@@ -40,15 +39,11 @@ namespace datastructures {
 
     //Counts ---------------- //
     Counts::Counts() {
-
         count_ = 0;
-
     }
 
     Counts::Counts(int i) {
-
         count_ = i;
-
     }
 
     Counts &Counts::operator++() {
@@ -61,47 +56,23 @@ namespace datastructures {
         return count_;
     }
 
-    bool Counts::operator==(const Counts &x){
+    bool Counts::operator==(const Counts &x)const{
         return this->getCount()==x.getCount();
     }
 
-    bool Counts::operator>(const Counts &x){
-        return this->getCount()>x.getCount();
-    }
-
-    bool Counts::operator<(const Counts &x) {
+    bool Counts::operator<(const Counts &x)const {
         return this->getCount()<x.getCount();
     }
 
-    bool Counts::operator==(const int &x) const{
-        return this->getCount()==x;
-    }
-
-    bool Counts::operator>(const int &x){
-        return this->getCount()>x;
-    }
-
-    bool Counts::operator<(const int &x){
-        return this->getCount()<x;
-    }
-
-    bool Counts::operator!=(const Counts &x) {
-        return this->getCount()!=x.getCount();
-    }
-
-    bool Counts::operator!=(const int &x) const {
-        return this->getCount()!=x;
-    }
 
 
     //Word counter ---------------------------//
-    WordCounter::WordCounter() = default;
+
 
 
     WordCounter::WordCounter(std::initializer_list<Word> list) {
         for(auto& i : list){
-            word_=i;
-            ++(map_[word_]);
+            ++(map_[i]);
 
         }
     }
@@ -125,19 +96,31 @@ namespace datastructures {
     }
 
     std::set<Word>WordCounter::Words(){
-        int n=0;
         std::set<Word> result;
-        for(auto i : map_){
-            n=i.second.getCount();
-            for (int j = n; j > 0; --j) {
-                result.insert(i.first);
-            }
+        for (auto i:this->map_){
+            result.insert(i.first);
         }
         return result;
     }
 
-    int WordCounter::operator[](const std::string &word) {
-        auto result = map_[Word(word)].getCount();
-        return result;
+    Counts WordCounter::operator[](std::string word) {
+        auto i = map_.find(Word(word));
+        if (i != map_.end()) {
+            return i->second;
+        } else {
+            return Counts(0);
+        }
+    }
+
+    WordCounter::WordCounter() {
+
+    }
+
+    bool operator==(int a, const Counts &b) {
+        return(a==b.getCount());
+    }
+
+    bool operator>(Counts &a, const int b) {
+        return a.getCount()>b;
     }
 }
