@@ -96,15 +96,12 @@ namespace datastructures {
     }
 
     std::set<Word>WordCounter::Words(){
-        int n=0;
         std::set<Word> result;
-        for(auto i : map_){
-            n=i.second.getCount();
-            for (int j = n; j > 0; --j) {
-                result.insert(i.first);
-            }
+        for (auto i:this->map_){
+            result.insert(i.first);
         }
         return result;
+
     }
 
     Counts WordCounter::operator[](std::string word) {
