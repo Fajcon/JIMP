@@ -10,8 +10,9 @@
 #include <utility>
 #include <map>
 #include <set>
+#include <list>
 #include <initializer_list>
-#include <sstream>
+#include <algorithm>
 
 namespace datastructures {
 
@@ -28,36 +29,25 @@ namespace datastructures {
 
         int getCount() const;
 
-        bool operator==(const Counts &x);
+        bool operator==(const Counts &x)const;
 
-        bool operator>(const Counts &x);
-
-        bool operator<(const Counts &x);
-
-        bool operator==(const int &x) const;
-
-        bool operator>(const int &x);
-
-        bool operator<(const int &x);
-
-
+        bool operator<(const Counts &x)const;
 
     private:
-
         int count_;
-
     };
 
+    bool operator==(const int a, const Counts &b);
+    bool operator>(const Counts &a, const int b);
 
     class Word{
 
     public:
-
         Word();
+        Word(std::string word);
+        std::string getWord() const;
 
-        explicit Word(const std::string &word);
-
-        bool operator==(const Word &x)const;
+        bool operator==(const Word &x) const;
         bool operator>(const Word &x)const;
         bool operator<(const Word &x)const;
 
@@ -79,7 +69,7 @@ namespace datastructures {
 
         int TotalWords();
 
-        int operator[](const std::string &);
+        Counts operator[](std::string);
 
         std::set<Word> Words();
 
