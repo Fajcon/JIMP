@@ -25,11 +25,11 @@ namespace geometry {
 //Specjalna inicjalizacja zmiennych. Zmienne są inicjowane
 //nim zostanie wywołane ciało konstruktora
     Point::Point() : x_(0), y_(0) {
-        cout << "Konstruktor bezparametrowy" << endl;
+        cout << "Konstruktor bezparametrowy Point" << endl;
     }
 
     Point::Point(double x, double y) {
-        cout << "Konstruktor parametrowy" << endl;
+        cout << "Konstruktor parametrowy Point" << endl;
         x_ = x;
         y_ = y;
     }
