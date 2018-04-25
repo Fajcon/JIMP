@@ -44,10 +44,10 @@ namespace geometry {
         double x_, y_;
     };
 
-    std::istream& operator>>(std::istream &is, Point& point);
-    std::ostream& operator<<(std::ostream &output, Point& point);
+    std::istream &operator>>(std::istream &is, Point &point);
 
-
-#endif  // PROJECTNAME_PATH_POINT_H_
+    std::ostream &operator<<(std::ostream &output, Point &point);
 
 }
+#endif  // PROJECTNAME_PATH_POINT_H_
+
