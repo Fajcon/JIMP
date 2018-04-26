@@ -28,10 +28,10 @@ namespace utility {
 
     class ZipperIterator : public IterableIterator {
     public:
-        explicit ZipperIterator(std::vector<int>::const_iterator left,
+        /*explicit ZipperIterator(std::vector<int>::const_iterator left,
                                 std::vector<std::string>::const_iterator right,
                                 std::vector<int>::const_iterator left_end,
-                                std::vector<std::string>::const_iterator right_end);
+                                std::vector<std::string>::const_iterator right_end);*/
 
         explicit ZipperIterator(std::vector<int>::const_iterator left,
                                 std::vector<std::string>::const_iterator right);
@@ -42,6 +42,18 @@ namespace utility {
 
         bool NotEquals(const std::unique_ptr<IterableIterator> &other) const override;
 
+
+    };
+
+    class ProductIterator : public IterableIterator{
+    public:
+        explicit ProductIterator(std::vector<int>::const_iterator left,
+                                 std::vector<std::string>::const_iterator right);
+        std::pair<int, std::string> Dereference() const override;
+
+        IterableIterator &Next() override;
+
+        bool NotEquals(const std::unique_ptr<IterableIterator> &other) const override;
 
     };
 
