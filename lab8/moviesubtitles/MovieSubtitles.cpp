@@ -75,6 +75,7 @@ namespace moviesubs {
             throw std::invalid_argument("error");
         }
         std::regex regex_pattern(R"((\d\d):(\d\d):(\d\d),(\d\d\d) --> (\d\d):(\d\d):(\d\d),(\d\d\d))");
+        std::regex index_pattern(R"((\d+))");
         int line_index=1;
         int index = 1;
         char line_buffer[1000];
@@ -82,6 +83,14 @@ namespace moviesubs {
 
         while(in->getline(line_buffer, 1000)) {
             std::cmatch sub;
+            std::cmatch sub2;
+            if(index > 2 && line_index == 1){
+                throw InvalidSubtitleLineFormat();
+            }
+            if (std::regex_match(line_buffer, sub2, index_pattern)){
+                int test = std::stoi(sub2[1]);
+                if (test != line_index) throw OutOfOrderFrames();
+            }
             if (std::regex_match(line_buffer, sub, regex_pattern)){
 
                 if (offset_in_micro_seconds*(-1) > std::stoi(sub[4])+std::stoi(sub[3])*1000){
@@ -135,12 +144,7 @@ namespace moviesubs {
                 line_index++;
 
 
-            }else if(index == 2 || index == 6){
-                throw(InvalidSubtitleLineFormat());
             }else{
-                if(index == 5 && std::stoi(line_buffer) != line_index){
-                    throw(OutOfOrderFrames());
-                }
                 (*out) << line_buffer << "\n";
             }
             index++;
