@@ -5,7 +5,7 @@
 #include "Iterable.h"
 namespace utility{
 
-    /*ZipperIterator::ZipperIterator(std::vector<int>::const_iterator left,
+    ZipperIterator::ZipperIterator(std::vector<int>::const_iterator left,
                                    std::vector<std::string>::const_iterator right,
                                    std::vector<int>::const_iterator left_end,
                                    std::vector<std::string>::const_iterator right_end) {
@@ -15,7 +15,7 @@ namespace utility{
         left_ = left;
         right_ = right;
 
-    }*/
+    }
 
     std::pair<int, std::string> ZipperIterator::Dereference() const {
         return std::make_pair(*left_, *right_);
@@ -47,6 +47,15 @@ namespace utility{
 
     }
 
+    EnumerateIterator::EnumerateIterator(std::vector<int>::const_iterator left,
+                                     std::vector<std::string>::const_iterator right) {
+
+        left_=left;
+        right_=right;
+
+    }
+
+
     std::pair<int, std::string> ProductIterator::Dereference() const {
         return std::make_pair(*left_, *right_);
     }
@@ -58,7 +67,21 @@ namespace utility{
     }
 
     bool ProductIterator::NotEquals(const std::unique_ptr<IterableIterator> &other) const {
-        return ((right_!=other->right_) || (left_!=other->left_));;
+        return ((right_!=other->right_) || (left_!=other->left_));
+    }
+
+    std::pair<int, std::string> EnumerateIterator::Dereference() const {
+        return std::make_pair(*left_, *right_);
+    }
+
+    IterableIterator &EnumerateIterator::Next() {
+        ++left_;
+        ++right_;
+        return *this;
+    }
+
+    bool EnumerateIterator::NotEquals(const std::unique_ptr<IterableIterator> &other) const {
+        return ((right_!=other->right_) || (left_!=other->left_));
     }
 
     IterableIteratorWrapper::IterableIteratorWrapper(std::unique_ptr<IterableIterator> iterator) {
@@ -78,21 +101,21 @@ namespace utility{
         return *this;
     }
 
-    IterableIteratorWrapper Iterable::begin() const {
+    IterableIteratorWrapper Iterable::cbegin() const {
         return IterableIteratorWrapper(ConstBegin());
     }
 
-    IterableIteratorWrapper Iterable::end() const {
+    IterableIteratorWrapper Iterable::cend() const {
         return IterableIteratorWrapper(ConstEnd());
     }
 
-    //IterableIteratorWrapper Iterable::begin() const {
-     //   return cbegin();
-    //}
+    IterableIteratorWrapper Iterable::begin() const {
+    return cbegin();
+    }
 
-    //IterableIteratorWrapper Iterable::end() const {
-     //   return cend();
-    //}
+    IterableIteratorWrapper Iterable::end() const {
+        return cend();
+    }
 
     Zipper::Zipper(std::vector<int> vectorInt, std::vector<std::string> vectorString) {
         vectorInt_=vectorInt;
@@ -130,14 +153,14 @@ namespace utility{
     }
 
     std::unique_ptr<IterableIterator> Enumerate::ConstBegin() const {
-        ZipperIterator zit (vectorInt_.begin(),vectorString_.begin());
-        std::unique_ptr<IterableIterator> ptr = std::make_unique<ZipperIterator>(zit);
+        EnumerateIterator eit (vectorInt_.begin(),vectorString_.begin());
+        std::unique_ptr<IterableIterator> ptr = std::make_unique<EnumerateIterator>(eit);
         return ptr;
     }
 
     std::unique_ptr<IterableIterator> Enumerate::ConstEnd() const {
-        ZipperIterator zit (vectorInt_.end(),vectorString_.end());
-        std::unique_ptr<IterableIterator> ptr = std::make_unique<ZipperIterator>(zit);
+        EnumerateIterator eit (vectorInt_.end(),vectorString_.end());
+        std::unique_ptr<IterableIterator> ptr = std::make_unique<EnumerateIterator>(eit);
         return ptr;
     }
 
@@ -161,6 +184,7 @@ namespace utility{
         std::unique_ptr<IterableIterator> ptr = std::make_unique<ProductIterator>(zit);
         return ptr;
     }
+
 
 
 }
