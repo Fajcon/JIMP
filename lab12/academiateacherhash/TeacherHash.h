@@ -12,6 +12,7 @@ namespace academia {
     public:
         TeacherId(int id);
         operator int () const;
+        bool operator != (const TeacherId & other) const;
 
     private:
         int id_;
@@ -24,6 +25,8 @@ namespace academia {
         const TeacherId &Id() const;
         const std::string &Name() const;
         const std::string &Department() const;
+        bool operator != (const Teacher & other) const;
+        bool operator == (const Teacher & other) const;
 
     private:
         TeacherId id_;
@@ -33,6 +36,8 @@ namespace academia {
 
 
     class TeacherHash {
+    public:
+        size_t operator()(const Teacher & to_hash) const;
 
     };
 }

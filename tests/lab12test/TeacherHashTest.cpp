@@ -14,7 +14,7 @@ using ::std::literals::string_literals::operator""s;
 
 
 class TeacherHashTest : public ::testing::Test, MemLeakTest {
- public:
+public:
 };
 
 
@@ -38,20 +38,20 @@ TEST_F(TeacherHashTest, CanCompareSameTeacherIdsAndReturnsTrue) {
 }
 
 TEST_F(TeacherHashTest, CanCreateTeacherWithSpecifiedFields) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
   EXPECT_EQ((TeacherId(1002)), s1.Id());
   EXPECT_EQ("Alozjzy"s, s1.Name());
   EXPECT_EQ("Katedra Informatyki"s, s1.Department());
 }
 
 TEST_F(TeacherHashTest, CanCompareSameTeachersAndReturnsTrue) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s2 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s2 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
   EXPECT_EQ(s1, s2);
 }
 
 TEST_F(TeacherHashTest, CanCalculateHashOfTeacherUsingStructWithRedefinedFunctionCallOperator) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
   const TeacherHash hash {};
   size_t hash_value = hash(s1);
   EXPECT_NE(0, hash_value);
@@ -59,7 +59,7 @@ TEST_F(TeacherHashTest, CanCalculateHashOfTeacherUsingStructWithRedefinedFunctio
 }
 
 TEST_F(TeacherHashTest, EveryHashCalculationGiveSameResult) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
   const TeacherHash hash {};
   size_t hash_value = hash(s1);
   EXPECT_NE(0, hash_value);
@@ -69,8 +69,8 @@ TEST_F(TeacherHashTest, EveryHashCalculationGiveSameResult) {
 }
 
 TEST_F(TeacherHashTest, SameTeachersHasEqualHashes) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s2 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s2 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
   const TeacherHash hash {};
   EXPECT_EQ(s1, s2);
   EXPECT_EQ(hash(s1), hash(s2));
@@ -79,18 +79,18 @@ TEST_F(TeacherHashTest, SameTeachersHasEqualHashes) {
 }
 
 TEST_F(TeacherHashTest, DifferentTeachersHasUsuallyHaveDifferentHashes) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s2 = Teacher(TeacherId(1003), "Euzebiusz", "Katedra Automatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s2 = Teacher (TeacherId (1003), "Euzebiusz", "Katedra Automatyki");
   const TeacherHash hash {};
   EXPECT_NE(s1, s2);
   EXPECT_NE(hash(s1), hash(s2));
 }
 
 TEST_F(TeacherHashTest, AlmostEqualTeachersHasUsuallyHaveDifferentHashesToo) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s2 = Teacher(TeacherId(1002), "Alozjzy", "Katedra InFormatyki", TeacherId(0));
-  Teacher s3 = Teacher(TeacherId(1003), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s4 = Teacher(TeacherId(1002), "alozjzy", "Katedra Informatyki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s2 = Teacher (TeacherId (1002), "Alozjzy", "Katedra InFormatyki");
+  Teacher s3 = Teacher (TeacherId (1003), "Alozjzy", "Katedra Informatyki");
+  Teacher s4 = Teacher (TeacherId (1002), "alozjzy", "Katedra Informatyki");
   const TeacherHash hash {};
   EXPECT_NE(s1, s2);
   EXPECT_NE(s1, s3);
@@ -107,9 +107,9 @@ TEST_F(TeacherHashTest, AlmostEqualTeachersHasUsuallyHaveDifferentHashesToo) {
 }
 
 TEST_F(TeacherHashTest, CanInsertTeachersAsKeysIntoUnorderedMap) {
-  Teacher s1 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s2 = Teacher(TeacherId(1002), "Alozjzy", "Katedra Informatyki", TeacherId(0));
-  Teacher s3 = Teacher(TeacherId(1017), "Klaudiusz", "Katedra Elektroniki", TeacherId(0));
+  Teacher s1 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s2 = Teacher (TeacherId (1002), "Alozjzy", "Katedra Informatyki");
+  Teacher s3 = Teacher (TeacherId (1017), "Klaudiusz", "Katedra Elektroniki");
   const TeacherHash hash {};
   std::unordered_map<Teacher, int, TeacherHash> m;
   m.emplace(s1, 100'000'000);

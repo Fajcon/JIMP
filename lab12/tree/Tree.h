@@ -19,7 +19,7 @@ namespace tree {
         }
 
         void Insert(const Element &e) {
-            if (e > Value()){
+            if (e < Value()){
                 if(left_ == nullptr) {
                     left_ = std::make_unique<Tree<Element>>(e);
                 }
@@ -42,14 +42,14 @@ namespace tree {
         }
 
         size_t Depth() {
-            if(left_ == nullptr && right_ == nullptr){
+            if (left_ == nullptr and right_ == nullptr) {
                 return 1;
-            }
-            else if(left_ != nullptr){
-                return left_->Depth() + 1;
-            }
-            else if(right_ != nullptr){
-                return right_->Depth() + 1;
+            } else if (right_ == nullptr) {
+                return left_->Depth()+1;
+            } else if (left_ == nullptr) {
+                return right_->Depth()+1;
+            } else {
+                return std::max(left_->Depth() , right_->Depth())+1;
             }
         }
 
@@ -72,11 +72,25 @@ namespace tree {
             return value_;
         }
 
+        Tree <Element>* Root (){
+            return this;
+        }
+    public:
+        const std::unique_ptr<Tree> &getLeft_() const {
+            return left_;
+        }
+
+        const std::unique_ptr<Tree> &getRight_() const {
+            return right_;
+        }
+
     private:
         std::unique_ptr<Tree> left_;
         std::unique_ptr<Tree> right_;
         Element value_;
     };
+
+
 }
 
 
