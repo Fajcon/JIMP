@@ -75,7 +75,7 @@ namespace tree {
         Tree <Element>* Root (){
             return this;
         }
-    public:
+
         const std::unique_ptr<Tree> &getLeft_() const {
             return left_;
         }
@@ -90,8 +90,6 @@ namespace tree {
         Element value_;
     };
 
-
 }
-
 
 #endif //JIMP_EXERCISES_TREE_H
